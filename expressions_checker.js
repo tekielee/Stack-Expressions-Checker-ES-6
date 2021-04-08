@@ -45,7 +45,13 @@ class Stack {
 	}
 	
 	expressionChecker(str) {
-		let valid = true;
+		let valid;
+		var hasChar = /\(|\)|\{|\}|\[|\]/.test(str);
+		if(hasChar) {
+			valid = true;
+		}else {
+			valid = false;
+		}
 		str = Array.from(str.split(' ').join(''));
 		for(let i = 0; i < str.length; i++) {
 			let char = str[i];
@@ -58,18 +64,15 @@ class Stack {
 				case ')':
 				case '}':
 				case ']':
-				if(this.isEmpty()) {
-					valid = false;
-				} else {
-					let last = this.stack.pop();
-					if((char == ')' && last != '(') || (char == '}' && last != '{') || (char == ']' && last != '[')) {
+					if(this.isEmpty()) {
 						valid = false;
-					} 
-				}
-				break;
-			}
-			if(!valid) {
-				break;
+					} else {
+						let last = this.stack.pop();
+						if((char == ')' && last != '(') || (char == '}' && last != '{') || (char == ']' && last != '[')) {
+							valid = false;
+						} 
+					}
+					break;
 			}
 		}	
 	
@@ -80,6 +83,7 @@ class Stack {
 const stack = new Stack();
 
 let expressions = ['8 * (9 - 2) + { ( 4 * 5) / ( 2 * 2) }', '5 * 8 * 9 / ( 3 * 2 ) )', '[{ (2 * 7) + ( 15 - 3) ]'];
+//let expressions = ['123456'];
 for(let i = 0; i < expressions.length; i++) {
 	let valid = stack.expressionChecker(expressions[i]);
 	if(valid) {
