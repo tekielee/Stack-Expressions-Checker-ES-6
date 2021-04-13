@@ -59,7 +59,7 @@ class Stack {
 				case '(':
 				case '{':
 				case '[':
-					this.push(str[i]);
+					this.stack.push(str[i]);
 					break;
 				case ')':
 				case '}':
